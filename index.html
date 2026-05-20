@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LF Collection - Hot Wheels</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc; /* Slate 50 */
+        }
+        
+        h1, h2, .font-teko {
+            font-family: 'Teko', sans-serif;
+        }
+
+        .hotwheels-blue { color: #004fb6; }
+        .hotwheels-orange { color: #ff5722; }
+        .bg-hotwheels-orange { background-color: #ff5722; }
+        .border-hotwheels-orange { border-color: #ff5722; }
+
+        /* Efeito de brilho na logo */
+        .logo-glow {
+            text-shadow: 0 0 10px rgba(255, 87, 34, 0.5), 0 0 20px rgba(255, 87, 34, 0.3);
+        }
+
+        /* Animação suave nos cards */
+        .car-card {
+            transition: all 0.3s ease;
+        }
+        .car-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(255, 87, 34, 0.3);
+        }
+
+        /* Efeito no texto do carro hover */
+        .car-title {
+            transition: color 0.2s;
+        }
+        .car-card:hover .car-title {
+            color: #ff5722;
+        }
+        
+        /* Skeleton loading simples para imagens */
+        .img-placeholder {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <header class="bg-slate-900 border-b border-hotwheels-orange sticky top-0 z-50 shadow-lg shadow-orange-900/20">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i data-lucide="car-front" class="text-hotwheels-orange w-8 h-8"></i>
+                <h1 class="text-4xl font-bold uppercase tracking-wider logo-glow">
+                    <span class="text-white">LF</span> <span class="text-hotwheels-orange">Collection</span>
+                </h1>
+            </div>
+            <nav class="hidden md:flex gap-6">
+                <a href="#" class="text-slate-300 hover:text-hotwheels-orange font-semibold transition-colors uppercase tracking-wide">Coleção</a>
+                <a href="#" class="text-slate-300 hover:text-hotwheels-orange font-semibold transition-colors uppercase tracking-wide">Sobre</a>
+                <a href="#" class="text-slate-300 hover:text-hotwheels-orange font-semibold transition-colors uppercase tracking-wide">Contato</a>
+            </nav>
+            <button class="md:hidden text-hotwheels-orange hover:text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="relative py-20 bg-gradient-to-b from-slate-900 to-slate-800 border-b border-slate-700">
+        <div class="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
+            <!-- Grid de fundo decorativo -->
+            <div class="w-full h-full" style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 40px 40px;"></div>
+        </div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-5xl md:text-7xl font-bold font-teko uppercase mb-4 tracking-wider">Onde a Paixão Acelera</h2>
+            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+                Bem-vindo à LF Collection. Explore um acervo curado com dedicação, apresentando 40 miniaturas icônicas da Hot Wheels em escala 1:64.
+            </p>
+            <div class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-hotwheels-orange text-white font-bold rounded-full uppercase tracking-wide hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/50 cursor-pointer">
+                <i data-lucide="chevrons-down" class="w-5 h-5"></i>
+                Ver Modelos
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-grow container mx-auto px-4 py-12">
+        <div class="flex justify-between items-end mb-8 border-b border-slate-700 pb-4">
+            <div>
+                <h3 class="text-3xl font-teko font-bold uppercase tracking-wide text-hotwheels-orange">Garagem Principal</h3>
+                <p class="text-slate-400 text-sm">Mostrando 40 de 40 miniaturas</p>
+            </div>
+            <div class="hidden sm:flex gap-2">
+                <button class="p-2 bg-slate-800 rounded text-slate-400 hover:text-white hover:bg-slate-700 transition"><i data-lucide="layout-grid" class="w-5 h-5"></i></button>
+                <button class="p-2 bg-slate-800 rounded text-slate-400 hover:text-white hover:bg-slate-700 transition"><i data-lucide="list" class="w-5 h-5"></i></button>
+            </div>
+        </div>
+
+        <!-- O Grid que vai segurar os 40 itens -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" id="collection-grid">
+            
+            <!-- Vamos gerar os primeiros 40 itens DIRETAMENTE NO HTML para evitar problemas de carregamento local -->
+            
+            <!-- Carro 01 -->
+            <div class="car-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer relative flex flex-col h-full">
+                <div class="absolute top-2 right-2 bg-slate-900/90 text-hotwheels-orange text-xs font-bold px-2 py-1 rounded z-10 font-teko text-lg border border-orange-900/50 shadow-sm shadow-black">
+                    #01
+                </div>
+                <div class="aspect-[4/3] bg-slate-700 relative overflow-hidden">
+                    <img src="./hw1.jpg" alt="Miniatura 01" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/1e293b/ff5722?text=hw1.jpg+Nao+Encontrada'">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h4 class="font-bold text-lg leading-tight mb-1 car-title truncate">Vaga #01</h4>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-auto">LF Collection</p>
+                    <div class="flex justify-between items-end mt-4 pt-3 border-t border-slate-700/50">
+                        <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">escala 1:64</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carro 02 -->
+            <div class="car-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer relative flex flex-col h-full">
+                <div class="absolute top-2 right-2 bg-slate-900/90 text-hotwheels-orange text-xs font-bold px-2 py-1 rounded z-10 font-teko text-lg border border-orange-900/50 shadow-sm shadow-black">
+                    #02
+                </div>
+                <div class="aspect-[4/3] bg-slate-700 relative overflow-hidden">
+                    <img src="./hw2.jpg" alt="Miniatura 02" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/1e293b/ff5722?text=hw2.jpg+Nao+Encontrada'">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h4 class="font-bold text-lg leading-tight mb-1 car-title truncate">Vaga #02</h4>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-auto">LF Collection</p>
+                    <div class="flex justify-between items-end mt-4 pt-3 border-t border-slate-700/50">
+                        <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">escala 1:64</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Carro 03 -->
+             <div class="car-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer relative flex flex-col h-full">
+                <div class="absolute top-2 right-2 bg-slate-900/90 text-hotwheels-orange text-xs font-bold px-2 py-1 rounded z-10 font-teko text-lg border border-orange-900/50 shadow-sm shadow-black">
+                    #03
+                </div>
+                <div class="aspect-[4/3] bg-slate-700 relative overflow-hidden">
+                    <img src="./hw3.jpg" alt="Miniatura 03" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/1e293b/ff5722?text=hw3.jpg+Nao+Encontrada'">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h4 class="font-bold text-lg leading-tight mb-1 car-title truncate">Vaga #03</h4>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-auto">LF Collection</p>
+                    <div class="flex justify-between items-end mt-4 pt-3 border-t border-slate-700/50">
+                        <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">escala 1:64</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carro 04 -->
+             <div class="car-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer relative flex flex-col h-full">
+                <div class="absolute top-2 right-2 bg-slate-900/90 text-hotwheels-orange text-xs font-bold px-2 py-1 rounded z-10 font-teko text-lg border border-orange-900/50 shadow-sm shadow-black">
+                    #04
+                </div>
+                <div class="aspect-[4/3] bg-slate-700 relative overflow-hidden">
+                    <img src="./hw4.jpg" alt="Miniatura 04" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/1e293b/ff5722?text=hw4.jpg+Nao+Encontrada'">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h4 class="font-bold text-lg leading-tight mb-1 car-title truncate">Vaga #04</h4>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-auto">LF Collection</p>
+                    <div class="flex justify-between items-end mt-4 pt-3 border-t border-slate-700/50">
+                        <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">escala 1:64</span>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Carro 05 -->
+             <div class="car-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer relative flex flex-col h-full">
+                <div class="absolute top-2 right-2 bg-slate-900/90 text-hotwheels-orange text-xs font-bold px-2 py-1 rounded z-10 font-teko text-lg border border-orange-900/50 shadow-sm shadow-black">
+                    #05
+                </div>
+                <div class="aspect-[4/3] bg-slate-700 relative overflow-hidden">
+                    <img src="./hw5.jpg" alt="Miniatura 05" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/1e293b/ff5722?text=hw5.jpg+Nao+Encontrada'">
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h4 class="font-bold text-lg leading-tight mb-1 car-title truncate">Vaga #05</h4>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-auto">LF Collection</p>
+                    <div class="flex justify-between items-end mt-4 pt-3 border-t border-slate-700/50">
+                        <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">escala 1:64</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="mt-12 text-center">
+            <button class="px-8 py-3 bg-transparent border-2 border-slate-600 text-slate-300 font-bold rounded-full uppercase tracking-wide hover:border-hotwheels-orange hover:text-hotwheels-orange transition-colors">
+                Carregar Mais (Em breve)
+            </button>
+        </div>
+    </main>
+
+    <!-- Lightbox / Modal para ampliar a imagem -->
+    <div id="image-modal" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 opacity-0 cursor-zoom-out">
+        <button id="close-modal" class="absolute top-4 right-4 md:top-8 md:right-8 text-slate-400 hover:text-hotwheels-orange transition-colors z-50 cursor-pointer">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <img id="modal-image" src="" alt="Miniatura Ampliada" class="max-w-[95vw] max-h-[90vh] rounded-lg shadow-2xl object-contain transform scale-95 transition-transform duration-300 cursor-default border-2 border-slate-800">
+    </div>
+
+    <footer class="bg-slate-900 border-t border-slate-800 pt-12 pb-6 mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="car-front" class="text-slate-500 w-6 h-6"></i>
+                    <span class="text-2xl font-bold font-teko uppercase tracking-wider text-slate-400">LF Collection</span>
+                </div>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-hotwheels-orange hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-hotwheels-orange hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-hotwheels-orange hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div class="text-center text-slate-500 text-sm border-t border-slate-800 pt-6">
+                <p>&copy; 2026 LF Collection. Site não oficial. "Hot Wheels" é marca registrada da Mattel, Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gridContainer = document.getElementById('collection-grid');
+            
+            // Já criamos os 5 primeiros no HTML para teste. 
+            // Vamos gerar do 6 ao 40 dinamicamente para não deixar o código gigante.
+            const totalItems = 40;
+            let cardsHTML = '';
+
+            for (let i = 6; i <= totalItems; i++) {
+                // Formata o número para ter dois dígitos
+                const numStr = i.toString().padStart(2, '0');
+                
+                cardsHTML += `
+                <div class="car-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 group cursor-pointer relative flex flex-col h-full">
+                    <div class="absolute top-2 right-2 bg-slate-900/90 text-hotwheels-orange text-xs font-bold px-2 py-1 rounded z-10 font-teko text-lg border border-orange-900/50 shadow-sm shadow-black">
+                        #${numStr}
+                    </div>
+                    <div class="aspect-[4/3] bg-slate-700 relative overflow-hidden">
+                        <img 
+                            src="./hw${i}.jpg" 
+                            alt="Miniatura LF Collection ${numStr}" 
+                            class="w-full h-full object-cover absolute top-0 left-0 group-hover:scale-110 transition-transform duration-500"
+                            onerror="this.src='https://placehold.co/400x300/1e293b/ff5722?text=hw${i}.jpg+Nao+Encontrada';"
+                        >
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h4 class="font-bold text-lg leading-tight mb-1 car-title truncate">Vaga #${numStr}</h4>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider mb-auto">LF Collection</p>
+                        <div class="flex justify-between items-end mt-4 pt-3 border-t border-slate-700/50">
+                            <span class="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">escala 1:64</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // Adiciona os cards dinâmicos depois dos 5 primeiros
+            gridContainer.insertAdjacentHTML('beforeend', cardsHTML);
+            
+            // Lógica do Modal (Lightbox) para ampliar imagens
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            const closeBtn = document.getElementById('close-modal');
+
+            // Abrir modal ao clicar em qualquer imagem
+            gridContainer.addEventListener('click', (e) => {
+                const card = e.target.closest('.car-card');
+                if (card) {
+                    const img = card.querySelector('img');
+                    if (img) {
+                        modalImg.src = img.src;
+                        modal.classList.remove('hidden');
+                        
+                        // Pequeno atraso para a animação do CSS funcionar corretamente
+                        setTimeout(() => {
+                            modal.classList.remove('opacity-0');
+                            modalImg.classList.remove('scale-95');
+                            modalImg.classList.add('scale-100');
+                        }, 10);
+                        
+                        document.body.style.overflow = 'hidden'; // Trava a rolagem da página no fundo
+                    }
+                }
+            });
+
+            // Fechar modal (função)
+            const fecharModal = () => {
+                modal.classList.add('opacity-0');
+                modalImg.classList.remove('scale-100');
+                modalImg.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modalImg.src = ''; // Limpa a imagem da memória visual
+                }, 300);
+                
+                document.body.style.overflow = ''; // Libera a rolagem da página
+            };
+
+            // 1. Fechar ao clicar no botão X
+            closeBtn.addEventListener('click', fecharModal);
+
+            // 2. Fechar ao clicar fora da imagem (no fundo escuro)
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) fecharModal();
+            });
+
+            // 3. Fechar ao apertar a tecla ESC do teclado
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    fecharModal();
+                }
+            });
+            
+            // Renderiza os ícones, incluindo o novo "X" do modal
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
